@@ -1,7 +1,8 @@
 pipeline {
     agent any
+
     environment {
-    SONAR_TOKEN = credentials('SONAR_TOKEN')
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
     }
 
     stages {
@@ -40,16 +41,16 @@ pipeline {
         stage('SonarCloud Analysis') {
             steps {
                 sh '''
-                curl -o sonar-scanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.0.0.4432-linux.zip
+                curl -o sonar-scanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-5.0.1.3006-linux.zip
 
                 apt-get update
                 apt-get install -y unzip
 
                 unzip -o sonar-scanner.zip
 
-                chmod +x sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner
+                chmod +x sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner
 
-                ./sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner
+                ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner
                 '''
             }
         }
