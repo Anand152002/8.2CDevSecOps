@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+    SONAR_TOKEN = credentials('SONAR_TOKEN')
+    }
 
     stages {
 
@@ -31,6 +34,18 @@ pipeline {
         stage('NPM Audit (Security Scan)') {
             steps {
                 sh 'npm audit || true'
+            }
+        }
+
+        stage('SonarCloud Analysis') {
+            steps {
+                sh '''
+                curl -o sonar-scanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.0.0.4432-linux.zip
+                apt-get update
+                apt-get install -y unzip
+                unzip sonar-scanner.zip
+                ./sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner
+                '''
             }
         }
     }
