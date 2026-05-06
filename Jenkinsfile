@@ -41,9 +41,14 @@ pipeline {
             steps {
                 sh '''
                 curl -o sonar-scanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.0.0.4432-linux.zip
+
                 apt-get update
                 apt-get install -y unzip
-                unzip sonar-scanner.zip
+
+                unzip -o sonar-scanner.zip
+
+                chmod +x sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner
+
                 ./sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner
                 '''
             }
